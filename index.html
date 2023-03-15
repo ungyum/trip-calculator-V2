@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이거하려고 하루종일 CSS 배웠다</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,700,0,0"
+    />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style3.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/splitting/dist/splitting.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/splitting/dist/splitting-cells.css"
+    />
+  </head>
+  <body>
+    <div class="hello">
+      <div class="text">
+        <div class="text-head">사용법</div>
+        <div class="text-p">
+          알쥬? (설명 개귀찮.. ㅈㅅ ㅎㅎ)<br />추가사항: 노션 복붙 똑같이 해서
+          계산하기 눌러보셈
+        </div>
+      </div>
+      <div data-splitting class="start-btn">START</div>
+      <div class="curtain"></div>
+      <div class="vessel"><img src="images/vessel.png" alt="" /></div>
+    </div>
+
+    <div class="too-long w">
+      경고: 맥북 화면 비율에 맞춰 제작되었습니다. 가로가 너무 길다
+    </div>
+    <div class="too-long h">
+      경고: 맥북 화면 비율에 맞춰 제작되었습니다. 가로가 너무 짧다 (=세로가 너무
+      길다)
+    </div>
+    <div class="too-long m">경고: 모바일은 지원안합니다 ~~~</div>
+
+    <h1>TRIP CALCULATOR 2.0!</h1>
+    <div class="btn-viewport">
+      <div class="calc-btn">계산하기!</div>
+    </div>
+    <div class="textborder">
+      <textarea class="textarea" spellcheck="false" id="input"></textarea>
+    </div>
+
+    <div class="calc-scene">
+      <div class="curtain"></div>
+      <span id="back-btn" class="material-symbols-rounded"> arrow_back </span>
+      <div class="reset">
+        <div class="calc-text">총 경비는?</div>
+        <div data-splitting-won class="won"></div>
+        <div class="additional"></div>
+      </div>
+    </div>
+
+    <aside>
+      <div class="kith">
+        <div class="anim /anim-shake">
+          <img src="images/kith1.png" alt="" />
+        </div>
+      </div>
+      <div class="skyline">
+        <div class="anim /anim-zoomInDown">
+          <img src="images/skyline1.png" alt="" />
+        </div>
+      </div>
+      <div class="brkln">
+        <div class="anim /anim-flipIn">
+          <img src="images/brkln1.png" alt="" />
+        </div>
+      </div>
+      <div class="empire">
+        <div class="anim /anim-tilt">
+          <img src="images/empire1.png" alt="" />
+        </div>
+      </div>
+      <div class="statue">
+        <div class="anim /anim-up">
+          <img src="images/statue1.png" alt="" />
+        </div>
+        <div class="bubbles">
+          <div class="big-bubble">사용법?</div>
+          <div class="small-bubble"></div>
+        </div>
+      </div>
+      <div class="thyun">
+        <div class="anim /anim-rubber">
+          <img src="images/man1.png" alt="" />
+        </div>
+      </div>
+      <div class="nyapt">
+        <div class="anim /anim-bounceIn">
+          <img src="images/nyapt1.png" alt="" />
+        </div>
+      </div>
+      <div class="moma">
+        <div class="anim /anim-left">
+          <img src="images/moma1.png" alt="" />
+        </div>
+      </div>
+      <div class="cereal">
+        <div class="anim-rotate">
+          <img src="images/cereal1.png" alt="" />
+        </div>
+      </div>
+      <div class="airplane">
+        <div class="anim-fly">
+          <div class="rotate">
+            <img src="images/airplane.png" alt="" />
+          </div>
+        </div>
+        <div class="anim-fly">
+          <div class="trail"></div>
+        </div>
+      </div>
+    </aside>
+    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+    <script src="main2.js"></script>
+    <script>
+      Splitting();
+    </script>
+  </body>
+</html>

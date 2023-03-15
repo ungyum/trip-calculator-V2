@@ -1,0 +1,908 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap");
+body {
+  background-color: #9bcaff;
+  position: relative;
+  overflow: hidden;
+}
+
+img {
+  -o-object-fit: fill;
+     object-fit: fill;
+  width: 100%;
+  height: 100%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.too-long {
+  display: none;
+}
+
+/* 계산 화면 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+.calc-scene.active, .reset {
+  position: fixed;
+  z-index: 30;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset {
+  display: none;
+}
+
+/* 커튼 */
+.calc-scene .curtain {
+  z-index: 30;
+  position: fixed;
+  width: 100vw;
+  height: 200vh;
+  top: -200vh;
+  left: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6509803922), rgba(0, 0, 0, 0.6509803922) 50%, rgba(0, 0, 0, 0.3254901961) 75%, rgba(0, 0, 0, 0));
+  transition: 0.5s;
+}
+
+.calc-scene.active .curtain {
+  transform: translateY(200vh);
+  transition: 1s;
+}
+
+.calc-scene * {
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+.calc-scene .material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
+}
+
+/* 총 경비는? */
+.calc-text {
+  display: none;
+  z-index: 31;
+  position: absolute;
+  color: #e9e3d8;
+  animation-name: fadeIn, jiggle, fadeOut;
+  animation-duration: 0.5s, 0.15s, 0.5s;
+  animation-delay: 1.3s, 2.3s, 4s;
+  animation-fill-mode: backwards, none, forwards;
+  animation-iteration-count: 1, 20, 1;
+  animation-direction: normal, alternate, normal;
+  transform-origin: 50% 50%;
+  font-weight: 900;
+  font-size: 100px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}
+@keyframes jiggle {
+  0% {
+    transform: rotate(1deg);
+    animation-timing-function: ease-in;
+  }
+  50% {
+    transform: rotate(-1.5deg);
+    animation-timing-function: ease-out;
+  }
+}
+.won {
+  display: none;
+  z-index: 31;
+  position: absolute;
+  color: #e9e3d8;
+  font-weight: 900;
+  font-size: 100px;
+}
+.won .char:first-child:nth-last-child(1),
+.won .char:first-child:nth-last-child(1) ~ .char {
+  --total-count: 1;
+}
+.won .char:first-child:nth-last-child(2),
+.won .char:first-child:nth-last-child(2) ~ .char {
+  --total-count: 2;
+}
+.won .char:first-child:nth-last-child(3),
+.won .char:first-child:nth-last-child(3) ~ .char {
+  --total-count: 3;
+}
+.won .char:first-child:nth-last-child(4),
+.won .char:first-child:nth-last-child(4) ~ .char {
+  --total-count: 4;
+}
+.won .char:first-child:nth-last-child(5),
+.won .char:first-child:nth-last-child(5) ~ .char {
+  --total-count: 5;
+}
+.won .char:first-child:nth-last-child(6),
+.won .char:first-child:nth-last-child(6) ~ .char {
+  --total-count: 6;
+}
+.won .char:first-child:nth-last-child(7),
+.won .char:first-child:nth-last-child(7) ~ .char {
+  --total-count: 7;
+}
+.won .char:first-child:nth-last-child(8),
+.won .char:first-child:nth-last-child(8) ~ .char {
+  --total-count: 8;
+}
+.won .char:first-child:nth-last-child(9),
+.won .char:first-child:nth-last-child(9) ~ .char {
+  --total-count: 9;
+}
+.won .char:first-child:nth-last-child(10),
+.won .char:first-child:nth-last-child(10) ~ .char {
+  --total-count: 10;
+}
+.won .char:first-child:nth-last-child(11),
+.won .char:first-child:nth-last-child(11) ~ .char {
+  --total-count: 11;
+}
+.won .char:first-child:nth-last-child(12),
+.won .char:first-child:nth-last-child(12) ~ .char {
+  --total-count: 12;
+}
+.won .char:first-child:nth-last-child(13),
+.won .char:first-child:nth-last-child(13) ~ .char {
+  --total-count: 13;
+}
+.won .char:first-child:nth-last-child(14),
+.won .char:first-child:nth-last-child(14) ~ .char {
+  --total-count: 14;
+}
+.won .char:first-child:nth-last-child(15),
+.won .char:first-child:nth-last-child(15) ~ .char {
+  --total-count: 15;
+}
+.won .char {
+  animation: puff-in 0.5s backwards cubic-bezier(0.46, 0, 1, 0.11);
+  animation-delay: calc(0.5s * (var(--total-count) - var(--char-index) - 1));
+}
+.won .char:nth-last-child(1) {
+  animation-delay: calc(0.5s * (var(--total-count)));
+}
+@keyframes puff-in {
+  0% {
+    transform: scale(3);
+    transform-origin: calc(200% - var(--char-index) * 300% / (var(--total-count) - 1)) 0%;
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: calc(200% - var(--char-index) * 300% / (var(--total-count) - 1)) 0%;
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+.anim-calc-up {
+  animation: calcUp 1s forwards;
+}
+
+@keyframes calcUp {
+  to {
+    transform: translateY(-60px);
+  }
+}
+.additional {
+  display: none;
+  z-index: 31;
+  position: absolute;
+  color: #e9e3d8;
+  font-weight: 900;
+  font-size: 55px;
+  top: 53%;
+  animation: fadeIn 1s 1s backwards;
+}
+
+#back-btn {
+  display: none;
+  z-index: 31;
+  position: fixed;
+  color: #e9e3d8;
+  font-size: 40px;
+  top: 14%;
+  left: 13.4%;
+  cursor: pointer;
+  padding: 10px 20px;
+  animation: fadeIn 1s;
+}
+
+/* 처음 화면 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+.hello {
+  position: fixed;
+  z-index: 20;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hello .curtain {
+  z-index: 20;
+  position: absolute;
+  width: 100vh;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  background-image: linear-gradient(#9bcaff, #9bcaff);
+  border-radius: 50%;
+  transform: scale(2.5) translate3d(-50vh, -50vh, 0);
+  transform-origin: top left;
+  transition: 1s;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 23%;
+  z-index: 21;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  font-size: 24px;
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 900;
+  color: #766563;
+  border: 1px solid;
+}
+.text .text-head {
+  position: fixed;
+  transition: 0.3s;
+  top: 23%;
+}
+.text .text-p {
+  position: fixed;
+  opacity: 0;
+  transition: 0.5s;
+  top: 32%;
+  font-size: 15px;
+}
+
+.text:hover .text-p {
+  opacity: 1;
+}
+
+.hello.active .text * {
+  opacity: 0;
+}
+
+.hello .start-btn {
+  position: absolute;
+  z-index: 21;
+  /* border: 1px solid; */
+  cursor: pointer;
+  transition: 1s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  font-size: 81px;
+  font-family: Asap Condensed, sans-serif;
+  font-weight: 900;
+  color: #373659;
+  letter-spacing: 8px;
+  top: 61%;
+}
+.hello .start-btn * {
+  font-family: Asap Condensed, sans-serif;
+}
+.hello .start-btn:hover .char {
+  animation: jump 800ms infinite cubic-bezier(0.165, 0.44, 0.64, 1);
+  animation-delay: calc(var(--char-index) * 0.075s);
+}
+@keyframes jump {
+  20% {
+    transform: translateY(2%) scaleY(0.9);
+  }
+  40% {
+    transform: translateY(-50%) scaleY(1.2);
+  }
+  50% {
+    transform: translateY(10%) scaleY(0.8);
+  }
+  70% {
+    transform: translateY(-5%) scaleY(1);
+  }
+  80%, 100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+.hello.active .start-btn {
+  opacity: 0%;
+  cursor: default;
+}
+
+.hello.active .curtain {
+  position: absolute;
+  width: 100vh;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  background-image: linear-gradient(#9bcaff, #9bcaff);
+  border-radius: 50%;
+  transform: scale(0) translate3d(-50vh, -50vh, 0);
+  transform-origin: top left;
+}
+
+.vessel {
+  position: fixed;
+  z-index: 19;
+  width: 100vw;
+  height: 100wh;
+  transition: 2s;
+  transition-delay: 0.5s;
+}
+
+.hello.active .vessel {
+  transform: scale(4);
+}
+
+/* trip calculator 글자 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+h1 {
+  font-family: Asap Condensed, sans-serif;
+  font-weight: 700;
+  color: #373659;
+  position: absolute;
+  top: -1%;
+  font-size: 10vh;
+  -webkit-mask: linear-gradient(-60deg, #000 45%, rgba(0, 0, 0, 0.3333333333), #000 55%) right/300% 100%;
+  mask: linear-gradient(-60deg, #000 45%, rgba(0, 0, 0, 0.3333333333), #000 55%) right/300% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 6s infinite 2s;
+}
+
+@keyframes shimmer {
+  25%, 100% {
+    -webkit-mask-position: left;
+  }
+}
+/* 계산하기 버튼 @@@@@@@@@@@@@@@@@@@@@@@ */
+.btn-viewport {
+  position: fixed;
+  width: 13%;
+  height: 15%;
+  top: 28%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calc-btn {
+  position: absolute;
+  top: 110%;
+  transition: 0.7s;
+  transition-timing-function: cubic-bezier(0.5, -0.15, 0.26, 1.26);
+  cursor: pointer;
+  padding: 5px 15px 5px 15px;
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 700;
+  color: #e9e3d8;
+  background-color: #766563;
+  border-radius: 30px;
+  box-shadow: 0 0 5px #766563;
+}
+
+.calc-moved {
+  top: 20%;
+  animation: floatingCalc 3s infinite ease-in-out;
+}
+
+@keyframes floatingCalc {
+  from {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 5px);
+  }
+  to {
+    transform: translate(0, 0px);
+  }
+}
+/* 텍스트박스 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+.textborder {
+  position: fixed;
+  top: 43%;
+  width: 37%;
+  height: 37%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 10px #b8daff;
+}
+
+.textborder:focus-within {
+  border-color: #719ece;
+  box-shadow: 0 0 10px #719ece;
+}
+
+.textarea {
+  transform: translateX(3px);
+  width: 90%;
+  height: 80%;
+  border: none;
+  background: transparent;
+  resize: none;
+  padding: 0px;
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #373659;
+  font-family: "Nanum Gothic", sans-serif;
+  line-height: 180%;
+  outline: none !important;
+}
+
+.textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+.textarea::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+  background-color: rgba(55, 54, 89, 0.4549019608);
+  border-radius: 5px;
+}
+
+/* 비행기 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+.airplane {
+  position: fixed;
+  z-index: -1;
+  width: 2%;
+  height: 2%;
+  top: 20%;
+  right: 15%;
+  transform: rotate(30deg);
+}
+
+.airplane .anim-fly .rotate {
+  transform: rotate(-25deg);
+}
+
+.trail {
+  background-image: linear-gradient(to right, rgba(240, 255, 255, 0.1), rgba(240, 255, 255, 0.879) 10%, rgba(240, 255, 255, 0.879) 50%, rgba(240, 255, 255, 0));
+  width: 3700%;
+  height: 35%;
+  transform: translateX(3%) translateY(-100%);
+  border-radius: 50% 0 0 50%;
+}
+
+.anim-fly {
+  animation-name: fly;
+  animation-duration: 54s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: 10s;
+  animation-fill-mode: backwards;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes fly {
+  0% {
+    transform: translate(1500%);
+  }
+  66%, 100% {
+    transform: translateX(-5000%);
+  }
+}
+/* 사진들 애니메이션 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+.anim {
+  width: 100%;
+  height: 100%;
+}
+
+/* 키스 흔들기 */
+.anim-shake {
+  animation-name: shake;
+  animation-duration: 3s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes shake {
+  0% {
+    transform: scale3d(0.1, 0.1, 0.1);
+  }
+  45%, 55%, 65% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate(3deg);
+  }
+  40%, 50%, 60% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate(-3deg);
+  }
+  70%, 100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+/* 씨리얼 뱅글뱅글 */
+.anim-rotate {
+  animation-name: rotate;
+  animation-duration: 18s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: 57% 50%;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* 태현 슈링크 */
+.anim-rubber {
+  animation-name: rubber;
+  animation-duration: 3s;
+  transform-origin: bottom;
+}
+
+@keyframes rubber {
+  0% {
+    transform: scaleY(2);
+  }
+  50% {
+    transform: scaleY(2.3);
+  }
+  60% {
+    transform: scaleY(0.75);
+  }
+  70% {
+    transform: scaleY(1.15);
+  }
+  75% {
+    transform: scaleY(0.95);
+  }
+  85% {
+    transform: scaleY(1.05);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+/* 여신상 올라오기 */
+.anim-up {
+  animation-name: up;
+  animation-duration: 1.5s;
+  animation-delay: 2s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+/* 스카이라인 */
+.anim-zoomInDown {
+  animation-name: zoomInDown;
+  animation-duration: 1.5s;
+}
+
+@keyframes zoomInDown {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -500px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+/* 아파트 추락 */
+.anim-bounceIn {
+  animation-name: bounceIn;
+  animation-duration: 1.5s;
+  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: translate3d(0, -125%, 0) scaleY(1);
+  }
+  50% {
+    transform: translate3d(0, -125%, 0) scaleY(1);
+  }
+  75% {
+    transform: translate3d(0, 10%, 0) scaleY(0.5);
+  }
+  80% {
+    transform: scaleY(1.2);
+  }
+  90% {
+    transform: scaleY(0.9);
+  }
+  to {
+    transform: translateZ(0);
+  }
+}
+/* 엠파이어 기울이기 */
+.anim-tilt {
+  animation-name: tilt;
+  animation-duration: 1s;
+  animation-delay: 1.5s;
+  transform-origin: 50% 150%;
+  animation-fill-mode: backwards;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+/* 브루클린 플립 */
+.anim-flipIn {
+  animation-name: flipIn;
+  animation-duration: 1s;
+}
+
+@keyframes flipIn {
+  0% {
+    transform: perspective(400px) rotateY(90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+  40% {
+    transform: perspective(400px) rotateY(-20deg);
+    animation-timing-function: ease-in;
+  }
+  60% {
+    transform: perspective(400px) rotateY(10deg);
+    opacity: 1;
+  }
+  80% {
+    transform: perspective(400px) rotateY(-5deg);
+  }
+  to {
+    transform: perspective(400px);
+  }
+}
+/* 모마 */
+.anim-left {
+  animation-name: left;
+  animation-duration: 1s;
+  animation-delay: 2s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+/* 사진들 위치 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+.kith {
+  position: fixed;
+  z-index: 10;
+  width: 22.2%;
+  height: 65%;
+  bottom: -9%;
+  left: 4.7%;
+  transform: rotate(-14deg);
+  cursor: pointer;
+}
+
+.skyline {
+  position: fixed;
+  width: 52.5%;
+  height: 26.8%;
+  bottom: -1.6%;
+  left: 19.9%;
+  cursor: pointer;
+}
+
+.brkln {
+  position: fixed;
+  z-index: 9;
+  width: 16%;
+  height: 34.8%;
+  bottom: -1.6%;
+  left: -4%;
+  cursor: pointer;
+}
+
+.empire {
+  position: fixed;
+  z-index: 8;
+  width: 10%;
+  height: 70%;
+  bottom: 17%;
+  left: -2%;
+  transform: rotate(15deg);
+  cursor: pointer;
+}
+
+.statue {
+  position: fixed;
+  z-index: 8;
+  width: 16%;
+  height: 62.8%;
+  bottom: -19.6%;
+  right: 12.1%;
+  transform: rotate(-17.8deg);
+  cursor: help;
+}
+
+.big-bubble {
+  z-index: -1;
+  font-size: 1px;
+  color: transparent;
+  position: fixed;
+  top: 30%;
+  right: 40%;
+  width: 10px;
+  height: 10px;
+  transform: rotate(17.8deg);
+  border-radius: 15px;
+  background-color: #80a3a3;
+  opacity: 0%;
+  transition: 1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.statue:hover .big-bubble {
+  z-index: 20;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 13px;
+  top: -7%;
+  right: -5%;
+  width: 70px;
+  height: 30px;
+  transform: rotate(17.8deg);
+  border-radius: 15px;
+  background-color: #80a3a3;
+  opacity: 100%;
+  color: antiquewhite;
+  box-shadow: 0 0 5px #80a3a3;
+  animation: floating 3s infinite ease-in-out;
+  cursor: pointer;
+}
+
+.small-bubble {
+  z-index: -1;
+  position: fixed;
+  top: 30%;
+  right: 40%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #80a3a3;
+  opacity: 0%;
+  transition: 1.3s;
+}
+
+.statue:hover .small-bubble {
+  top: 3%;
+  right: 35%;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: #80a3a3;
+  box-shadow: 0 0 5px #80a3a3;
+  opacity: 80%;
+  animation: floating 3s infinite 0.5s ease-in-out;
+}
+
+@keyframes floating {
+  from {
+    transform: rotate(17.8deg) translate(0, 0px);
+  }
+  50% {
+    transform: rotate(17.8deg) translate(0, 5px);
+  }
+  to {
+    transform: rotate(17.8deg) translate(0, 0px);
+  }
+}
+.thyun {
+  position: fixed;
+  z-index: 9;
+  width: 5.6%;
+  height: 15.8%;
+  bottom: -0.1%;
+  right: 22.3%;
+  transform: rotate(4deg);
+  cursor: pointer;
+}
+
+.nyapt {
+  position: fixed;
+  z-index: 2;
+  width: 34%;
+  height: 115.8%;
+  bottom: -41.6%;
+  right: -8%;
+  cursor: pointer;
+}
+
+.moma {
+  position: fixed;
+  z-index: 1;
+  width: 2.8%;
+  height: 39%;
+  bottom: 51%;
+  right: 0%;
+  cursor: pointer;
+}
+
+.cereal {
+  position: fixed;
+  z-index: 9;
+  width: 19%;
+  height: 28%;
+  bottom: -10%;
+  right: -2%;
+}
+
+/* 화면 비율 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+@media (min-aspect-ratio: 1.889) {
+  body * {
+    display: none;
+  }
+  .textborder {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  .too-long.w {
+    display: inline-block;
+  }
+}
+@media (max-aspect-ratio: 1.467) {
+  body * {
+    display: none;
+  }
+  .textborder {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  .too-long.h {
+    display: inline-block;
+  }
+}/*# sourceMappingURL=style3.css.map */
